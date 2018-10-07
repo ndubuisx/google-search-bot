@@ -1,32 +1,49 @@
 <html>
 
 <head>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <style>
-        * {
-            outline: 1;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Search Bot</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/normalize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-    <form action="{{ url_for('handle_data') }}" method="post">
-        <input type="text" name="projectFilePath">
-        <input type="submit">
-    </form>
-    <table class="table" border="1">
-        <tr>
-            <td><b>Search Query</b></td>
-            <td><b>Link</b></td>
-        </tr>
-        {% for item in result %}
-        <tr>
-            <td>{{ item[0] }}</td>
-            <td><a href="{{ item[1] | safe }}">{{ item[1] }}</a></td>
-        </tr>
-        {% endfor %}
+
+    <table>
+        <caption>
+            <form action="{{ url_for('handle_data') }}" method="post">
+
+                <div class="group">
+                    <input type="text" name="projectFilePath" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Enter search queries</label>
+                </div>
+            </form>
+        </caption>
+        <thead>
+            <tr>
+                <th scope="col">Search Query</th>
+                <th scope="col">Website Link</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="3">* Separate mutliple search queries with a comma and hit enter</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for item in result %}
+            <tr>
+                <th scope="row">{{ item[0] }}</th>
+                <td><a href="{{ item[1] | safe }}">{{ item[1] }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
 </body>
 
 </html>
